@@ -18,28 +18,65 @@ public class par_mas_cercano {
     /**
      * @param args the command line arguments
      */
-    public static double d_min[]=new double[3];
+    public static double d_min[] = new double[3];
     public static int c;
-    public static void main(String[] args) {  
-    
-    int N=7;
-     int X=30;
-    c=0;
-    d_min[2]=Double.POSITIVE_INFINITY;
-    double dis[]=new double[3];  
-    double dis2[]=new double[3];  
-    dis2[2]=Double.POSITIVE_INFINITY;
-    dis[2]=Double.POSITIVE_INFINITY;
-    int coords[][] = new int[N][3]; 
-     generar(coords,X,N);
-      coords=ordenar(coords,N);
-       FB(coords,N,dis2);
-      es(coords,N,3);
-      dis=d(coords,N,dis);
-      System.out.println("Los pares mas cercanos son "+((int)dis[0])+" y "+((int)dis[1])+" con una distancia de "+dis[2]);
-    
-   
-  
+    public static int c2;
+
+    public static void main(String[] args) {
+        int X = 30;
+        int t = 33000;
+        int N = 16;
+        int b = 2;
+        int s;
+        for (s = 1; b < t; s++) {
+            b *= 2;
+        }
+        int matriz[][] = new int[s - 4][2];
+        int matrizf[][] = new int[s - 4][2];
+        double tiempo[] = new double[s - 4];
+        double tiempof[] = new double[s - 4];
+
+        for (int i = 0; N < t; i++) {
+            System.out.println(N);
+            c2 = 0;
+            int comparacion[] = new int[200];
+            double promti[] = new double[200];
+            int coords[][] = new int[N][3];
+            double dis2[] = new double[3];
+            //genera la matriz con las coordenadas  
+            generar(coords, X, N);
+            dis2[2] = Double.POSITIVE_INFINITY;
+            double Inf = System.nanoTime();
+            FB(coords, N, dis2);
+            double Fif = System.nanoTime();
+            tiempof[i] = Fif - Inf;
+            matrizf[i][0] = N;
+            matrizf[i][1] = c2;
+            for (int j = 0; j < 200; j++) {
+                generar(coords, X, N);
+                //Se organiza la matriz de menor a mayor acorde
+                //al valor a los valores del eje x
+                coords = ordenar(coords, N);
+                c = 0;
+                d_min[2] = Double.POSITIVE_INFINITY;
+                double dis[] = new double[3];
+                dis[2] = Double.POSITIVE_INFINITY;
+                double In = System.nanoTime();
+                dis = d(coords, N, dis);
+                double Fi = System.nanoTime();
+                double time = Fi - In;
+                comparacion[j] = c;
+                promti[j] = time;
+            }
+
+            int promc = promedio(comparacion);
+            double promt = promedio2(promti);
+            matriz[i][0] = N;
+            matriz[i][1] = promc;
+            tiempo[i] = promt;
+            N *= 2;
+            X = N + 20;
+        }
     }
     
     public static double []d(int coords[][], int N,double dis[]){
@@ -314,5 +351,24 @@ public static double [] md(int coords[][],int N,double d_min,double dis[]){
                                             
     return dis;
     
-} 
+}
+public static int promedio(int arreglo[]) {
+        int prom = 0;
+//Se saca el promedio del conjunto de numeros del arreglo
+        for (int i = 0; i < arreglo.length; i++) {
+            prom += arreglo[i];
+        }
+        prom = prom / arreglo.length;
+        return prom;
+    }
+
+    public static int promedio2(double arreglo[]) {
+        int prom = 0;
+//Se saca el promedio del conjunto de numeros del arreglo
+        for (int i = 0; i < arreglo.length; i++) {
+            prom += arreglo[i];
+        }
+        prom = prom / arreglo.length;
+        return prom;
+    }
 }
