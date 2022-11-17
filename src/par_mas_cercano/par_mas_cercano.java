@@ -10,6 +10,8 @@ package par_mas_cercano;
  //* (at your option) any later version.
 
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -77,6 +79,12 @@ public class par_mas_cercano {
             N *= 2;
             X = N + 20;
         }
+         //Se guarda en un archivo los datos obtenidos 
+        //del algoritmo de fuerza bruta 
+        guardarf(matrizf, tiempof);
+         //Se guarda en un archivo los datos obtenidos 
+        //del algoritmo recursivo
+        guardar(matriz, tiempo);
     }
     
     public static double []d(int coords[][], int N,double dis[]){
@@ -370,5 +378,56 @@ public static int promedio(int arreglo[]) {
         }
         prom = prom / arreglo.length;
         return prom;
+    }
+        private static void guardar(int tabla[][], double t[]) {
+        //Escribe los resultados en pantalla 
+        for (int i = 0; i < t.length; i++) {
+            System.out.println(tabla[i][0] + "   " + tabla[i][1] + "    " + t[i]);
+        }
+        try {
+            String filename = "C:\\Users\\julian\\Desktop\\Universidad-20220209T040145Z-001\\Universidad"
+                    + "\\quinto semestre\\algoritmia y complejidad\\par mas cercano\\Recursivo.txt";
+            // creates new PrintWriter object for writing file
+            PrintWriter out = new PrintWriter(filename);
+            // Escribe los resultados en un archivo
+            for (int i = 0; i != t.length; ++i) {
+                out.printf("%d", tabla[i][0]);
+                out.printf(" ");
+                out.printf("%d", tabla[i][1]);
+                out.printf(" ");
+                out.printf("%d\n", (int) t[i]);
+            }
+            out.close();	// closes the file
+        } catch (FileNotFoundException err) {
+            // complains if file does not exist
+            System.out.println("IO Error:");
+            err.printStackTrace();
+        }
+    }
+
+    private static void guardarf(int tabla[][], double t[]) {
+        //Escribe los resultados en pantalla 
+        for (int i = 0; i < t.length; i++) {
+            System.out.println(tabla[i][0] + "   " + tabla[i][1] + "    " + t[i]);
+        }
+        try {
+            String filename = "C:\\Users\\julian\\Desktop\\Universidad-20220209T040145Z-001"
+                    + "\\Universidad\\quinto semestre\\algoritmia y complejidad\\par mas cercano\\FuerzaBruta.txt";
+            // creates new PrintWriter object for writing file
+            PrintWriter out = new PrintWriter(filename);
+            // Escribe los resultados en un archivo
+            for (int i = 0; i != t.length; ++i) {
+                out.printf("%d", tabla[i][0]);
+                out.printf(" ");
+                out.printf("%d", tabla[i][1]);
+                out.printf(" ");
+                out.printf("%d\n", (int) t[i]);
+            }
+            out.close();	// closes the file
+        } catch (FileNotFoundException err) {
+            // complains if file does not exist
+            System.out.println("IO Error:");
+            err.printStackTrace();
+        }
     }
 }
